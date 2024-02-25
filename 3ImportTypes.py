@@ -28,32 +28,32 @@ def process_file(filename, wordlist):
                 type_id = wordlist.index(type_wihtout_punctuation) + 1
             # Increment the corresponding frequency band
                 if type_id < 101:
-                    type_counts['100FREQ'] += 1
+                    type_counts['100T'] += 1
                 elif 100 < type_id < 301:
-                    type_counts['300FREQ'] += 1
+                    type_counts['300T'] += 1
                 elif 300 < type_id < 501:
-                    type_counts['500FREQ'] += 1
+                    type_counts['500T'] += 1
                 elif 500 < type_id < 1001:
-                    type_counts['1000FREQ'] += 1
+                    type_counts['1000T'] += 1
                 elif 1000 < type_id < 2001:
-                    type_counts['2000FREQ'] += 1
+                    type_counts['2000T'] += 1
                 elif 2000 < type_id < 3001:
-                    type_counts['3000FREQ'] += 1
+                    type_counts['3000T'] += 1
                 elif 3000 < type_id < 4001:
-                    type_counts['4000FREQ'] += 1
+                    type_counts['4000T'] += 1
                 elif 4000 < type_id < 5001:
-                    type_counts['5000FREQ'] += 1
+                    type_counts['5000T'] += 1
                 elif 5000 < type_id < 10001:
-                    type_counts['10000FREQ'] += 1
+                    type_counts['10000T'] += 1
                 type_counts['TYPES'] += 1
             else:
-                type_counts['10KplusFREQ'] += 1
+                type_counts['10KplusT'] += 1
                 types_10kPlus.append(type_wihtout_punctuation)
                 type_counts['TYPES'] += 1   # Calculate the total number of types
     total_types = type_counts['TYPES']
 
     # Calculate percentages for each frequency band
-    for band in ['100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ', '5000FREQ', '10000FREQ','10KplusFREQ']:
+    for band in ['100T', '300T', '500T', '1000T', '2000T', '3000T', '4000T', '5000T', '10000T','10KplusT']:
         if total_types >  0:  # Avoid division by zero
             type_counts[band] = (type_counts[band] / total_types) *  100
 
@@ -88,8 +88,8 @@ def main():
     # Writing the result to an Excel file
     excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/SSTypeFrequency.xlsx'
 
-    fieldnames = ['FILENAME', 'TYPES', '100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ',
-                  '5000FREQ', '10000FREQ', '10KplusFREQ']
+    fieldnames = ['FILENAME', 'TYPES', '100T', '300T', '500T', '1000T', '2000T', '3000T', '4000T', '5000T',
+                  '10000T','10KplusT']
 
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)

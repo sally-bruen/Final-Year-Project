@@ -31,27 +31,27 @@ def process_file(filename, wordlist):
                 word_id = wordlist.index(content_word_without_punctuation) + 1
             # Increment the corresponding frequency band
                 if word_id < 101:
-                    word_counts['100FREQ'] += 1
+                    word_counts['100C'] += 1
                 elif 100 < word_id < 301:
-                    word_counts['300FREQ'] += 1
+                    word_counts['300C'] += 1
                 elif 300 < word_id < 501:
-                    word_counts['500FREQ'] += 1
+                    word_counts['500C'] += 1
                 elif 500 < word_id < 1001:
-                    word_counts['1000FREQ'] += 1
+                    word_counts['1000C'] += 1
                 elif 1000 < word_id < 2001:
-                    word_counts['2000FREQ'] += 1
+                    word_counts['2000C'] += 1
                 elif 2000 < word_id < 3001:
-                    word_counts['3000FREQ'] += 1
+                    word_counts['3000C'] += 1
                 elif 3000 < word_id < 4001:
-                    word_counts['4000FREQ'] += 1
+                    word_counts['4000C'] += 1
                 elif 4000 < word_id < 5001:
-                    word_counts['5000FREQ'] += 1
+                    word_counts['5000C'] += 1
                 elif 5000 < word_id < 10001:
-                    word_counts['10000FREQ'] += 1
+                    word_counts['10000C'] += 1
                 word_counts['CONTENT_WORDS'] += 1
                 #print(content_word_without_punctuation, content, word_id)
             else:
-                word_counts['10KplusFREQ'] += 1
+                word_counts['10KplusC'] += 1
                 #print(content_word_without_punctuation, content, 'not in corpus')
                 words_10kplus.append(content_word_without_punctuation)
                 word_counts['CONTENT_WORDS'] += 1
@@ -61,8 +61,8 @@ def process_file(filename, wordlist):
     total_content = word_counts['CONTENT_WORDS']
 
     # Calculate percentages for each frequency band
-    for band in ['100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ', '5000FREQ',
-                 '10000FREQ','10KplusFREQ']:
+    for band in ['100C', '300C', '500C', '1000C', '2000C', '3000C', '4000C', '5000C',
+                 '10000C','10KplusC']:
         if total_content > 0:
             word_counts[band] = (word_counts[band] / total_content) * 100  # Avoid division by zero
 
@@ -97,8 +97,8 @@ def main():
     # Writing the result to an Excel file
     excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/SSContentFrequency.xlsx'
 
-    fieldnames = ['FILENAME', 'CONTENT_WORDS', '100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ',
-                  '5000FREQ', '10000FREQ', '10KplusFREQ']
+    fieldnames = ['FILENAME', 'CONTENT_WORDS', '100C', '300C', '500C', '1000C', '2000C', '3000C', '4000C',
+                  '5000C', '10000C','10KplusC']
 
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)

@@ -25,33 +25,33 @@ def process_file(filename, wordlist):
             word_id = wordlist.index(word_without_punctuation) + 1
             # Increment the corresponding frequency band
             if word_id < 101:
-                word_counts['100FREQ'] += 1
+                word_counts['100W'] += 1
             elif 100 < word_id < 301:
-                word_counts['300FREQ'] += 1
+                word_counts['300W'] += 1
             elif 300 < word_id < 501:
-                word_counts['500FREQ'] += 1
+                word_counts['500W'] += 1
             elif 500 < word_id < 1001:
-                word_counts['1000FREQ'] += 1
+                word_counts['1000W'] += 1
             elif 1000 < word_id < 2001:
-                word_counts['2000FREQ'] += 1
+                word_counts['2000W'] += 1
             elif 2000 < word_id < 3001:
-                word_counts['3000FREQ'] += 1
+                word_counts['3000W'] += 1
             elif 3000 < word_id < 4001:
-                word_counts['4000FREQ'] += 1
+                word_counts['4000W'] += 1
             elif 4000 < word_id < 5001:
-                word_counts['5000FREQ'] += 1
+                word_counts['5000W'] += 1
             elif 5000 < word_id < 10001:
-                word_counts['10000FREQ'] += 1
+                word_counts['10000W'] += 1
             word_counts['WORDS'] += 1
             #print(word_without_punctuation, word_counts.values())
         else:
-            word_counts['10KplusFREQ'] += 1
+            word_counts['10KplusW'] += 1
             words_10kplus.append(word_without_punctuation)
             word_counts['WORDS'] += 1
     total_words = word_counts['WORDS']
 
     # Calculate percentages for each frequency band
-    for band in ['100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ', '5000FREQ','10000FREQ','10KplusFREQ']:
+    for band in ['100W', '300W', '500W', '1000W', '2000W', '3000W', '4000W', '5000W','10000W','10KplusW']:
         if total_words > 0:
             word_counts[band] = (word_counts[band] / total_words) * 100# Avoid division by zero
 
@@ -86,8 +86,8 @@ def main():
     # Writing the result to an Excel file
     excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/SSWordFrequency.xlsx'
 
-    fieldnames = ['FILENAME', 'WORDS', '100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ',
-                  '5000FREQ', '10000FREQ', '10KplusFREQ']
+    fieldnames = ['FILENAME', 'WORDS', '100W', '300W', '500W', '1000W', '2000W', '3000W', '4000W', '5000W',
+                  '10000W','10KplusW']
 
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
