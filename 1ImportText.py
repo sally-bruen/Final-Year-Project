@@ -99,29 +99,3 @@ for result in results:
     ws.append(row)
 
 wb.save(excel_file_path)
-
-#
-# for file in files:
-#     if file.endswith('.vert'):
-#         result = process_file(os.path.join(folder, file))
-#         results.append(result)
-#
-# excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/SS Results/SSTextStats.xlsx'
-#
-# wb = Workbook()
-# ws = wb.active
-#
-# all_pos_keys = set(key for result in results for key in result['pos_count'])
-#
-# fieldnames = ['FILENAME', 'sentence_count', 'tokens', 'types', 'word_count', 'average_sentence_length',
-#               'lemtypes', 'gen_count'] + list(all_pos_keys)
-#
-# header_row = ['FILENAME'] + fieldnames
-# ws.append(header_row)
-#
-# for result in results:
-#     row = [result.get(key, '') for key in header_row]
-#     ws.append(row)
-#
-#
-# wb.save(excel_file_path)
