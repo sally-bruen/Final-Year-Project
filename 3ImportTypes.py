@@ -86,7 +86,7 @@ def main():
     results, all_types_10kPlus = process_files_in_folder(folder, wordlist)
 
     # Writing the result to an Excel file
-    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/SSTypeFrequency.xlsx'
+    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTypeFrequency.xlsx'
 
     fieldnames = ['FILENAME', 'TYPES', '100T', '300T', '500T', '1000T', '2000T', '3000T', '4000T', '5000T',
                   '10000T','10KplusT']

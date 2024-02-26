@@ -72,7 +72,7 @@ def process_file(filename):
             'pos_count': pos_count
         }
 
-folder = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles'
+folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'
 files = [file for file in os.listdir(folder) if file.endswith('.vert')]
 results = []
 

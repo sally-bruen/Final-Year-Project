@@ -84,7 +84,7 @@ def main():
     results, all_words_10kplus = process_files_in_folder(folder, wordlist)
 
     # Writing the result to an Excel file
-    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/SSWordFrequency.xlsx'
+    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllWordFrequency.xlsx'
 
     fieldnames = ['FILENAME', 'WORDS', '100W', '300W', '500W', '1000W', '2000W', '3000W', '4000W', '5000W',
                   '10000W','10KplusW']

@@ -131,7 +131,7 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # Read data from Excel file
-df = pd.read_excel('/Users/sallybruen/PycharmProjects/TextPrograms/SS Results/AllTextFrequency.xlsx')
+df = pd.read_excel('/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllContentFrequency.xlsx')
 
 # Function to extract the prefix from the filename
 def get_prefix(filename):
@@ -143,21 +143,21 @@ for index, row in df.iterrows():
     file_name = row['FILENAME']
     prefix = get_prefix(file_name)
     # Drop the  14th column and keep the rest starting from the  13th column
-    frequencies = row[13:]
+    frequencies = row[3:11]
     grouped_data[prefix].append(frequencies)
 
 average_frequencies = {prefix: sum(freqs)/len(freqs) for prefix, freqs in grouped_data.items()}
 
 # Extract data for x-axis (Word Count) and y-axis (Average Frequencies)
 # Get the column names excluding the  14th column
-word_count_ranges = df.columns[13:]  # Exclude the last column
+word_count_ranges = df.columns[3:11]  # Exclude the last column
 for prefix, avg_freq in average_frequencies.items():
     plt.plot(word_count_ranges, avg_freq, label=prefix, marker='o')
 
 # Adding labels and title
-plt.xlabel('Words in Frequency Ranges / Total Types')
-plt.ylabel('Percentage of Frequencies %')
-plt.title('Line Plot for Percentage of Word Frequencies / Types in All Files')
+plt.xlabel('Word Frequency Ranges')
+plt.ylabel('Percentage of Content Words in Frequencies %')
+plt.title('Line Plot for Percentage of Word Frequencies/Content Words in SS & CT Files')
 plt.grid(True)
 #plt.legend()
 
