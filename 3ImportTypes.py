@@ -15,17 +15,17 @@ def process_file(filename, wordlist):
     type_counts = defaultdict(int)
     unwanted_values = {' ','...','–','','‘',',','.','’',"'",'…','?','!',':','‑','“','”','(',')','/','-'}
     for type in text:
-        type_wihtout_punctuation = type.lower()
+        type_without_punctuation = type.lower()
 
-        if type_wihtout_punctuation in unwanted_values:
+        if type_without_punctuation in unwanted_values:
             continue
-        if type_wihtout_punctuation.isdigit():
+        if type_without_punctuation.isdigit():
             continue
         # Check if the type without punctuation is in the wordlist
-        if type_wihtout_punctuation not in types:
-            types.append(type_wihtout_punctuation)
-            if type_wihtout_punctuation in wordlist:
-                type_id = wordlist.index(type_wihtout_punctuation) + 1
+        if type_without_punctuation not in types:
+            types.append(type_without_punctuation)
+            if type_without_punctuation in wordlist:
+                type_id = wordlist.index(type_without_punctuation) + 1
             # Increment the corresponding frequency band
                 if type_id < 101:
                     type_counts['100T'] += 1
@@ -48,7 +48,7 @@ def process_file(filename, wordlist):
                 type_counts['TYPES'] += 1
             else:
                 type_counts['10KplusT'] += 1
-                types_10kPlus.append(type_wihtout_punctuation)
+                types_10kPlus.append(type_without_punctuation)
                 type_counts['TYPES'] += 1   # Calculate the total number of types
     total_types = type_counts['TYPES']
 

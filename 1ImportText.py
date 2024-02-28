@@ -28,12 +28,18 @@ def process_file(filename):
                 continue
             if row[3] == 'Fq':
                 continue
+            if row[3] =='Fp':
+                continue
+            if row[3] == 'F':
+                continue
+            if row[3] == 'Fb':
+                continue
             elif row[3] == 'Fe':
                 sentence_count +=  1
-                total_sentences +=  1  # Increment the total number of sentences
+                #total_sentences +=  1  # Increment the total number of sentences
                 if words_in_current_sentence > max_sentence_length:
                     max_sentence_length = words_in_current_sentence
-                total_words_in_sentences += words_in_current_sentence  # Add words in current sentence to total
+                #total_words_in_sentences += words_in_current_sentence  # Add words in current sentence to total
                 words_in_current_sentence =  0  # Reset words in current sentence
                 continue
             else:
@@ -53,7 +59,7 @@ def process_file(filename):
                     gen_count +=  1
 
         # Compute average sentence length as average number of words per sentence
-        avg_sentence_length = total_words_in_sentences / total_sentences
+        avg_sentence_length = overallwords / sentence_count
 
         # Convert defaultdict to a regular dictionary
         pos_count = dict(pos_count)
