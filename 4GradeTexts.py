@@ -1,9 +1,9 @@
 import pandas as pd
 
 # Define the ranges for CTTR, WDSEN, and TypeFreq
-CTTRRanges = [(1, 5), (4, 7.6), (7.6, 8.6), (8.6, 10), (9, 15)]
+CTTRRanges = [(1, 5), (4, 7.6), (7.6, 8.6), (8.6, 9.5), (9.5, 15)]
 WDSENRanges = [(0, 8), (8, 9), (9, 12), (12, 13), (13, 14), (14, 20)]
-TypeFreqRanges = [(40, 100), (25, 40), (19, 25), (13, 19), (10, 13), (0, 13)]
+TypeFreqRanges = [(40, 100), (25, 40), (19, 25), (15, 19), (12, 15), (0, 12)]
 lemRanges = [(0, 100), (100, 200), (200, 300), (300, 500), (500, 650), (650, 2000)]
 
 # Function to assign a value based on the range

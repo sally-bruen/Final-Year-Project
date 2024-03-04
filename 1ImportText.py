@@ -59,6 +59,8 @@ def process_file(filename):
                     gen_count +=  1
 
         # Compute average sentence length as average number of words per sentence
+        if sentence_count == 0:
+            sentence_count = 1
         avg_sentence_length = overallwords / sentence_count
 
         # Convert defaultdict to a regular dictionary
@@ -78,7 +80,7 @@ def process_file(filename):
             'pos_count': pos_count
         }
 
-folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'
+folder = '/Users/sallybruen/Downloads/test.vert'
 files = [file for file in os.listdir(folder) if file.endswith('.vert')]
 results = []
 
@@ -86,7 +88,7 @@ for file in files:
     result = process_file(os.path.join(folder, file))
     results.append(result)
 
-excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextStats.xlsx'
+excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/DCUTestTextStats.xlsx'
 
 wb = Workbook()
 ws = wb.active

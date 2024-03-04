@@ -38,6 +38,6 @@ def process_text_stats(input_file, output_file):
 
 
 if __name__ == "__main__":
-    input_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextStats.xlsx'
-    output_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextMeasures.xlsx'
+    input_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/DCUTestTextStats.xlsx'
+    output_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/DCUTestTextMeasures.xlsx'
     process_text_stats(input_file, output_file)
