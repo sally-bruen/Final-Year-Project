@@ -1,15 +1,3 @@
-# import pandas as pd
-#
-# def assign_value(value,filename):
-#     if filename.startswith()
-#
-#
-# cttr_wdsen_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/GradingofTexts.xlsx'
-#
-# df = pd.read_excel(cttr_wdsen_path, usecols=['FILENAME', 'RoundedGradeValue'])
-#
-# df['RGradeValue'] = df['RoundedGradeVale'].apply(assign_value,'FILENAME')
-
 import pandas as pd
 
 def compare_and_output(input_excel, output_excel):
@@ -24,7 +12,7 @@ def compare_and_output(input_excel, output_excel):
         lambda row: compare_grades(row['RoundGradeValue'], row['FILENAME']), axis=1)
 
     # Keep only 'FILENAME' and 'DifferenceValue' columns
-    output_df = filtered_df[['FILENAME', 'DifferenceValue']]
+    output_df = filtered_df[['FILENAME', 'RoundGradeValue', 'DifferenceValue']]
 
     # Write the updated DataFrame to a new Excel file
     output_df.to_excel(output_excel, index=False)
@@ -55,7 +43,7 @@ def compare_grades(rounded_grade_value, filename):
         return "Difference greater than 6"
 
 # Example usage:
-input_excel_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/GradingofTexts.xlsx'  # Replace with the actual input file path
-output_excel_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/PercentAccuracy.xlsx'  # Replace with the desired output file path
+input_excel_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/GradingofTexts.xlsx'  # path to input graded file
+output_excel_file = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/PercentAccuracy.xlsx'  #  output file path
 
 compare_and_output(input_excel_file, output_excel_file)

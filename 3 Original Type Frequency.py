@@ -4,13 +4,11 @@ from collections import defaultdict
 import pandas as pd
 
 def process_file(filename, wordlist):
-    words_10kplus = []
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter='\t')
         # Extract values from the first column
         text = [row[0] for row in reader]
         content_words = [row[3] for row in reader]
-
 
     types = []
     word_counts = defaultdict(int)
@@ -52,27 +50,23 @@ def process_file(filename, wordlist):
                 word_counts['TYPES'] += 1
             else:
                 word_counts['10KplusFREQ'] += 1
-                words_10kplus.append(word_without_punctuation)
                 word_counts['TYPES'] += 1
-    return word_counts, words_10kplus
+    return word_counts
 
 def process_files_in_folder(folder, wordlist):
     files = [f for f in os.listdir(folder) if f.endswith('.vert')]
     results = []
-    all_words_10kplus = []
     for file in files:
         result = {'FILENAME': file}
-        word_counts, words_10kplus = process_file(os.path.join(folder, file), wordlist)
+        word_counts = process_file(os.path.join(folder, file), wordlist)
         result.update(word_counts)
         results.append(result)
-        all_words_10kplus.extend(words_10kplus)
 
-    return results, all_words_10kplus
+    return results
 
 def main():
-    words_10kplus = []
-    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles'  # Set folder path
-    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/wordlist_NCIv2_2022-10000.xlsx'
+    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'  # path to folder of vert files
+    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/wordlist_NCIv2_2022-10000.xlsx' # path to word list file
     # Set the path to your wordlist file
 
     # Read the Excel file
@@ -80,22 +74,16 @@ def main():
     # Assuming the content is in the second column (index 1)
     wordlist = df.iloc[:, 1].tolist()
 
-    results, all_words_10kplus = process_files_in_folder(folder, wordlist)
+    results = process_files_in_folder(folder, wordlist)
 
     # Writing the result to an Excel file
-    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextFrequency.xlsx'
+    excel_file_path = '/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextFrequency.xlsx'  # path to output file
 
     fieldnames = ['FILENAME', 'TYPES', '100FREQ', '300FREQ', '500FREQ', '1000FREQ', '2000FREQ', '3000FREQ', '4000FREQ',
                   '5000FREQ', '10000FREQ', '10KplusFREQ']
 
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
-
-    # Write the  10kPlusFREQ words to a text file
-    text_file_path = '/TestFiles/10kplusFREQ_types.txt'
-    with open(text_file_path, 'w') as f:
-        for word in all_words_10kplus:
-            f.write(word + '\n')
 
 if __name__ == "__main__":
     main()

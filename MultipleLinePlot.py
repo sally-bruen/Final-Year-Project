@@ -15,21 +15,21 @@ for index, row in df.iterrows():
     file_name = row['FILENAME']
     prefix = get_prefix(file_name)
     # Drop the  14th column and keep the rest starting from the  13th column
-    frequencies = row[2:11]
+    frequencies = row[2:]
     grouped_data[prefix].append(frequencies)
 
 average_frequencies = {prefix: sum(freqs)/len(freqs) for prefix, freqs in grouped_data.items()}
 
 # Extract data for x-axis (Word Count) and y-axis (Average Frequencies)
 # Get the column names excluding the  14th column
-word_count_ranges = df.columns[2:11]  # Exclude the last column
+word_count_ranges = df.columns[2:]  # Exclude the last column
 for prefix, avg_freq in average_frequencies.items():
     plt.plot(word_count_ranges, avg_freq, label=prefix, marker='o')
 
 # Adding labels and title
 plt.xlabel('Word Frequency Ranges')
 plt.ylabel('Percentage of Types in Frequencies %')
-plt.title('Line Plot for Percentage of Word Frequencies/Types in SS & CT Files')
+plt.title('Line Plot for Percentage of Word Frequencies/Types in CT Files')
 plt.grid(True)
 #plt.legend()
 

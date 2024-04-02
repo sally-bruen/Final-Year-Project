@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # Read data from Excel file
-df = pd.read_excel('/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextStats.xlsx')
+df = pd.read_excel('/Users/sallybruen/PycharmProjects/TextPrograms/TestFiles/AllTextMeasures.xlsx')
 
 # Function to extract the prefix from the filename
 def get_prefix(filename):
@@ -15,7 +15,7 @@ for index, row in df.iterrows():
     file_name = row['FILENAME']
     prefix = get_prefix(file_name)
     # Select column   5 for average sentence length
-    sentence_length = row.iloc[6]  # Use iloc to avoid FutureWarning
+    sentence_length = row.iloc[3]  # Use iloc to avoid FutureWarning
     grouped_data[prefix]['sum'] += sentence_length
     grouped_data[prefix]['count'] +=   1
     grouped_data[prefix]['squared_sum'] += sentence_length**2
@@ -44,8 +44,8 @@ for i, (prefix, avg_length, std_dev) in enumerate(zip(prefixes, avg_lengths, std
 
 # Adding labels and title
 plt.xlabel('Prefixed Filename')
-plt.ylabel('Average Sentence Length Values')
-plt.title('Error Bar Chart of Average Sentence Lengths for All Files')
+plt.ylabel('CTTR Values')
+plt.title('Error Bar Chart of CTTR Values for TT Files')
 plt.grid(True)
 #plt.legend()  # Legend will now work because we've assigned labels to the plot elements
 plt.subplots_adjust(left=0.1, right=0.85)
