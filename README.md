@@ -1,5 +1,7 @@
 This folder has all the files used for my final year project. 
 
+At the moment, they have to be run directly in the IDE because that's the fastest way for me to work on them.
+
 Each file begins with a number corresponding to what the program is aiming to do.
 
 1 is for the program calculating the basic text statistics. The path to the vert folder and the output file path will need to be changed.
