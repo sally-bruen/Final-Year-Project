@@ -2,7 +2,6 @@ import os
 import csv
 from collections import defaultdict
 from openpyxl import Workbook
-import argparse
 
 values_to_skip = {'Xx', 'Fa', 'Fi', 'Fq', 'Fp', 'F', 'Fb'} # defines a set of values to skip
 
@@ -17,11 +16,11 @@ def process_file(filename):
             if row[3] in values_to_skip: # check if value should be skipped
                 continue
 
-            if row[3] == 'Fe': # check if value is s a full stop
+            if row[3] == 'Fe': # check if value is a full stop
                 sentence_count += 1
                 if words_in_current_sentence > max_sentence_length:
                     max_sentence_length = words_in_current_sentence
-                words_in_current_sentence = 0  # Reset word count in the current sentence
+                words_in_current_sentence = 0 # Reset word count in the current sentence
             else:
                 types.add(row[0].lower())
                 tokens += 1
@@ -51,10 +50,14 @@ def process_file(filename):
             'gen_count': gen_count,
             'pos_count': pos_count
         }
-    pass
 
+def main():
+    print('\nGive the path to the following folder and file: \n')
+    print("The folder containing the .vert files.")
+    folder_path = input()
+    print("\nThe output file in .xlsx format where you want these basic text statistics to be stored.")
+    excel_file_path = input()
 
-def main(folder_path, excel_file_path):
     files = [file for file in os.listdir(folder_path) if file.endswith('.vert')]
     results = [process_file(os.path.join(folder_path, file)) for file in files]
 
@@ -75,12 +78,7 @@ def main(folder_path, excel_file_path):
 
     wb.save(excel_file_path)
 
+    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process .vert files and output statistics to an Excel file.')
-    parser.add_argument('folder_path', type=str, help='Path to the folder containing .vert files.')
-    parser.add_argument('excel_file_path', type=str, help='Path to the output Excel file.')
-
-    args = parser.parse_args()
-
-    main(args.folder_path, args.excel_file_path)
-    print("\nThe basic text statistics calculated here are presented in the Excel file specified in the parameters.\n")
+    main()

@@ -26,9 +26,9 @@ def process_text_stats(input_file, output_file):
     df_selected.to_excel(output_file, index=False)
 
 if __name__ == "__main__":
-    print("Give the path for the input file in .xlsx format.")
+    print("\nGive the path for the input file in .xlsx format containing the basic text statistics.")
     input_file = input()
-    print("Give the path for the output file in .xlsx format.")
+    print("\nGive the path for the output file in .xlsx format to contain these four text measures.")
     output_file = input()
 
     process_text_stats(input_file, output_file)

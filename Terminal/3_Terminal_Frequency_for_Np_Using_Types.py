@@ -64,12 +64,12 @@ def process_files_in_folder(folder, wordlist):
     return results
 
 def main():
-    print('Give the paths to the following files and folders.\n')
-    print("The input folder:")
+    print('\nGive the paths to the following files and folders.\n')
+    print("The input folder of .vert files to be tested:")
     folder = input()
-    print("The word list file (in .xlsx format):")
+    print("\nThe word list file (in .xlsx format):")
     wordlist_file = input()
-    print("The output file (in .xlsx format):")
+    print("\nThe output file (in .xlsx format):")
     excel_file_path = input()
 
     df = pd.read_excel(wordlist_file)       # Read the wordlist file

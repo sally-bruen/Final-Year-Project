@@ -14,14 +14,14 @@ def assign_value(value, ranges):
     return 0
 
 def main():
-    print('Give the path for the following files (in .xlsx format): \n')
-    print("The CTTR/WDSEN file.")
+    print('\nGive the path for the following files (in .xlsx format): \n')
+    print("The CTTR/WDSEN file from program 2.")
     cttr_wdsen_path = input()
-    print("The Type Frequency file.")
+    print("\nThe Type Frequency file from program 3.")
     num_words_path = input()
-    print("The Lemma Count file.")
+    print("\nThe Lemma Count file from program 1.")
     lem_counts = input()
-    print("The output file.")
+    print("\nThe output file.")
     excel_file_path = input()
 
 
@@ -41,12 +41,14 @@ def main():
 
     # Calculate the average
     df['GradeValue'] = ((df['CTTRValue'] + df['WDSENValue'] + df['TypeFreqValue'] + df['LemValue'])/4)
-    df['RoundGradeValue'] = round(df['GradeValue'])
+    df['RoundGradeValue'] = df['GradeValue'].apply(lambda x: 3 if x == 2.5 else round(x))
 
     # Define the function to compare grades and output the result
     def compare_and_output(df):
         # Filter rows where FILENAME starts with '01' to '06'
-        filtered_df = df[df['FILENAME'].astype(str).str.startswith(('SS01', 'SS02', 'SS03', 'SS04', 'SS05', 'SS06'))]
+        filtered_df = df[df['FILENAME'].astype(str).str.startswith(('CTX1', 'CTX2', 'CTX3', 'SS01', 'SS02', 'SS03',
+                                                                    'SS04', 'SS05', 'SS06', 'TTA', 'TTB', 'TTC', 'TTD',
+                                                                    'TTE'))]
 
         # Create a new column 'DifferenceValue' based on the comparison
         filtered_df.loc[:, 'DifferenceValue'] = filtered_df.apply(
@@ -64,7 +66,7 @@ def main():
         }
 
         # Output the percentages
-        print("Percentage of times the difference is 0: {:.2f}%".format(percentages['Difference 0']))
+        print("\nPercentage of times the difference is 0: {:.2f}%".format(percentages['Difference 0']))
         print("Percentage of times the difference is 1: {:.2f}%".format(percentages['Difference 1']))
         print("Percentage of times the difference is 0 or 1: {:.2f}%".format(percentages['Difference 0 or 1']))
 
@@ -73,7 +75,19 @@ def main():
 
     def compare_grades(rounded_grade_value, filename):
         # Extract the numeric part of the filename prefix after "SS"
-        filename_prefix = int(filename[2:4]) # Assuming the prefix is always "SS" followed by a number
+        if filename.startswith('CTX'):
+            filename_prefix = int(filename[3:4])
+        elif filename.startswith('SS'):
+            filename_prefix = int(filename[2:4]) # Assuming the prefix is always "SS" followed by a number
+        else:
+            prefix_to_value = {
+                'TTA': 1,
+                'TTB': 2,
+                'TTC': 3,
+                'TTD': 4,
+                'TTE': 5
+            }
+            filename_prefix = prefix_to_value.get(filename[:3], 0)
 
         # Compare the rounded grade value with the numeric part of the filename prefix
         if rounded_grade_value>filename_prefix:
@@ -86,7 +100,7 @@ def main():
     # Example usage:
     compare_and_output(df)
 
-    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
+    print('\nThe results have also been outputted to ' + excel_file_path + ' displaying the values used.\n')
 
 if __name__ == "__main__":
     main()
