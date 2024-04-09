@@ -4,13 +4,13 @@ from collections import defaultdict
 import pandas as pd
 
 type_ranges = [(101, '100W'), (301, '300W'), (501, '500W'), (1001, '1000W'), (2001, '2000W'), (3001, '3000W'),
-                               (4001, '4000W'), (5001, '5000W'), (10001, '10KW')]
+               (4001, '4000W'), (5001, '5000W'), (10001, '10KW')]
 
 def process_file(filename, wordlist):
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter='\t')
         text = [row[0] for row in reader]   # get words from the first column of .vert file
-
+    total_words = 0
     word_counts = defaultdict(int)
     unwanted_values = {' ','...','–','','‘',',','.','’',"'",'…','?','!',':','‑','“','”','(',')','/','-'}
     for word in text:
@@ -33,7 +33,7 @@ def process_file(filename, wordlist):
             word_counts['WORDS'] += 1
         else:
             word_counts['10KplusW'] += 1
-            word_counts['WORDS'] += 1  # Calculate the total number of types
+            word_counts['WORDS'] += 1 # Calculate the total number of types
         total_words = word_counts['WORDS']
 
     # Calculate percentages for each frequency band
@@ -55,20 +55,26 @@ def process_files_in_folder(folder, wordlist):
     return results
 
 def main():
-    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'  # path to folder of vert files
-    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/wordlist_NCIv2_2022-10000.xlsx' # path to word list file in .xlsx format
+
+    print('Give the paths to the following files and folders.\n')
+    print("The input folder:")
+    folder = input()
+    print("The word list file (in .xlsx format):")
+    wordlist_file = input()
+    print("The output file (in .xlsx format):")
+    excel_file_path = input()
 
     df = pd.read_excel(wordlist_file)       # Read the wordlist file
     wordlist = df.iloc[:, 1].tolist()       # make a list of words in the wordlist at index 1
 
     results = process_files_in_folder(folder, wordlist)
 
-    excel_file_path = '/Users/sallybruen/PycharmProjects/WordFrequency.xlsx' # path to output file
-
     fieldnames = ['FILENAME', 'WORDS', '100W', '300W', '500W', '1000W', '2000W', '3000W', '4000W', '5000W',
-                  '10KW','10KplusW']
+                 '10KW','10KplusW']
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
+
+    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
 
 if __name__ == "__main__":
     main()

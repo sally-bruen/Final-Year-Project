@@ -4,7 +4,6 @@ import pandas as pd
 CTTRRanges = [(1, 4.7), (4.7, 7.4), (7.4, 8.7), (8.7, 10.6), (10.6, 11), (11, 100)]
 WDSENRanges = [(0, 7.6), (7.6, 9.8), (9.8, 11.1), (11.1, 12.8), (12.8, 14.6), (14.6, 100)]
 TypeFreqRanges = [(40.7, 100), (25.5, 40.7), (19, 25.5), (15, 19), (12, 15), (0, 12)]
-lemRanges = [(0, 107), (107, 276), (276, 312), (312, 510), (510, 720), (650, 2000)]
 
 # assign a value based on the range
 def assign_value(value, ranges):
@@ -14,25 +13,22 @@ def assign_value(value, ranges):
     return 0
 
 cttr_wdsen_path = '/Users/sallybruen/PycharmProjects/NewTextMeasures.xlsx'   # path to cttr/wdsen .xlsx file
-num_words_path = '/Users/sallybruen/PycharmProjects/B1TypeFrequency.xlsx'   # path to type frequency file
+num_words_path = '/Users/sallybruen/PycharmProjects/TypeFrequency.xlsx'   # path to type frequency file
 lem_counts = '/Users/sallybruen/PycharmProjects/NewTextStats.xlsx'           # path to lemma count file
 
 df1 = pd.read_excel(cttr_wdsen_path, usecols=['FILENAME', 'CTTR', 'WDSEN']) # take values from specified columns in specified files
 df2 = pd.read_excel(num_words_path, usecols=['FILENAME', '100T'])
-df3 = pd.read_excel(lem_counts, usecols=['FILENAME', 'lemmatypes'])
 
 # merge the two DataFrames on 'FILENAME'
 df = pd.merge(df1, df2, on='FILENAME')
-df = pd.merge(df, df3, on='FILENAME')
 
 # assign values based on the ranges
 df['CTTRValue'] = df['CTTR'].apply(assign_value, ranges=CTTRRanges)
 df['WDSENValue'] = df['WDSEN'].apply(assign_value, ranges=WDSENRanges)
 df['TypeFreqValue'] = df['100T'].apply(assign_value, ranges=TypeFreqRanges)
-df['LemValue'] = df['lemmatypes'].apply(assign_value, ranges=lemRanges)
 
 # Calculate the average
-df['GradeValue'] = ((df['CTTRValue'] + df['WDSENValue'] + df['TypeFreqValue'] + df['LemValue'])/4)
+df['GradeValue'] = ((df['CTTRValue'] + df['WDSENValue'] + df['TypeFreqValue'])/3)
 df['RoundGradeValue'] = round(df['GradeValue'])
 
 # Define the function to compare grades and output the result
@@ -53,12 +49,14 @@ def compare_and_output(df):
         'Difference 0': (difference_counts.get(0, 0) / total_rows) * 100,
         'Difference 1': (difference_counts.get(1, 0) / total_rows) * 100,
         'Difference 0 or 1': ((difference_counts.get(0, 0) + difference_counts.get(1, 0)) / total_rows) * 100,
+        'Difference 2': (difference_counts.get(2, 0) / total_rows) * 100
     }
 
     # Output the percentages
-    print("\nPercentage of times the difference is 0: {:.2f}%".format(percentages['Difference 0']))
+    print("Percentage of times the difference is 0: {:.2f}%".format(percentages['Difference 0']))
     print("Percentage of times the difference is 1: {:.2f}%".format(percentages['Difference 1']))
     print("Percentage of times the difference is 0 or 1: {:.2f}%".format(percentages['Difference 0 or 1']))
+    print("Percentage of times the difference is 2: {:.2f}%".format(percentages['Difference 2']))
 
     # Write the filtered DataFrame to an Excel file
     filtered_df.to_excel('/Users/sallybruen/PycharmProjects/OutputWithDifferences.xlsx', index=False)

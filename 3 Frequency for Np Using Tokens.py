@@ -8,6 +8,7 @@ type_ranges = [(101, '100T'), (301, '300T'), (501, '500T'), (1001, '1000T'), (20
 
 def process_file(filename, wordlist):
     text = []
+    total_tokens = 0
     content_words = []
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter='\t')

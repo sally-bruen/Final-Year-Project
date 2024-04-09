@@ -11,8 +11,8 @@ def process_file(filename, wordlist):
         # Extract values from the first column
         text = [row[0] for row in reader]
 
-
     types = []
+    total_types = 0
     type_counts = defaultdict(int)
     unwanted_values = {' ','...','–','','‘',',','.','’',"'",'…','?','!',':','‑','“','”','(',')','/','-'}
     for type in text:
@@ -37,12 +37,12 @@ def process_file(filename, wordlist):
                 type_counts['TYPES'] += 1
             else:
                 type_counts['NotinCorpusT'] += 1
-                type_counts['TYPES'] += 1  # Calculate the total number of types
+                type_counts['TYPES'] += 1 # Calculate the total number of types
         total_types = type_counts['TYPES']
 
     # Calculate percentages for each frequency band
     for band in ['100T', '200T', '300T', '400T', '500T', 'NotinCorpusT']:
-        if total_types >  0:  # Avoid division by zero
+        if total_types >  0: # Avoid division by zero
             type_counts[band] = (type_counts[band] / total_types) *  100
 
     return type_counts
@@ -59,9 +59,13 @@ def process_files_in_folder(folder, wordlist):
     return results
 
 def main():
-    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'  # Set folder path
-    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/breacadh_P215-teenv3.xlsx'
-    # Set the path to your wordlist file
+    print('Give the paths to the following files and folders.\n')
+    print("The input folder:")
+    folder = input()
+    print("The word list file (in .xlsx format):")
+    wordlist_file = input()
+    print("The output file (in .xlsx format):")
+    excel_file_path = input()
 
     # Read the Excel file
     df = pd.read_excel(wordlist_file)
@@ -70,13 +74,12 @@ def main():
 
     results = process_files_in_folder(folder, wordlist)
 
-    # Writing the result to an Excel file
-    excel_file_path = '/Users/sallybruen/PycharmProjects/B3TypeFrequency.xlsx'
-
     fieldnames = ['FILENAME', 'TYPES','100T', '200T', '300T', '400T', '500T', 'NotinCorpusT']
 
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
+
+    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
 
 
 if __name__ == "__main__":

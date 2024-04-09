@@ -4,7 +4,7 @@ from collections import defaultdict
 import pandas as pd
 
 type_ranges = [(101, '100T'), (301, '300T'), (501, '500T'), (1001, '1000T'), (2001, '2000T'), (3001, '3000T'),
-                               (4001, '4000T'), (5001, '5000T'), (10001, '10KT')]
+               (4001, '4000T'), (5001, '5000T'), (10001, '10KT')]
 
 def process_file(filename, wordlist):
     with open(filename, 'r') as file:
@@ -13,6 +13,7 @@ def process_file(filename, wordlist):
 
     types = []      # string to add each unique type read
     type_counts = defaultdict(int)
+    total_types = 0
     unwanted_values = {' ','...','–','','‘',',','.','’',"'",'…','?','!',':','‑','“','”','(',')','/','-'}
     for type in text:
         lowercase_type = type.lower()
@@ -41,7 +42,7 @@ def process_file(filename, wordlist):
 
     # Calculate percentages for each frequency band
     for band in ['100T', '300T', '500T', '1000T', '2000T', '3000T', '4000T', '5000T', '10KT','10KplusT']:
-        if total_types > 0:  # Avoid division by zero
+        if total_types > 0: # Avoid division by zero
             type_counts[band] = (type_counts[band] / total_types) *  100    # get percentage of types in each range
 
     return type_counts
@@ -58,20 +59,26 @@ def process_files_in_folder(folder, wordlist):
     return results
 
 def main():
-    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'  # path to folder of vert files
-    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/wordlist_NCIv2_2022-10000.xlsx' # path to word list file in .xlsx format
+    print('Give the paths to the following files and folders.\n')
+    print("The input folder:")
+    folder = input()
+    print("The word list file (in .xlsx format):")
+    wordlist_file = input()
+    print("The output file (in .xlsx format):")
+    excel_file_path = input()
 
     df = pd.read_excel(wordlist_file)       # Read the wordlist file
     wordlist = df.iloc[:, 1].tolist()       # make a list of words in wordlist at index 1
 
     results = process_files_in_folder(folder, wordlist)
 
-    excel_file_path = '/Users/sallybruen/PycharmProjects/TypeFrequency.xlsx'    # path to output file
-
     fieldnames = ['FILENAME', 'TYPES', '100T', '300T', '500T', '1000T', '2000T', '3000T', '4000T', '5000T',
-                  '10KT','10KplusT']
+                 '10KT','10KplusT']
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
+
+
+    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
 
 if __name__ == "__main__":
     main()

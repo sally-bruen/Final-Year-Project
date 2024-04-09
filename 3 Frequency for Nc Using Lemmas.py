@@ -8,6 +8,7 @@ type_ranges = [(101, '100C'), (301, '300C'), (501, '500C'), (1001, '1000C'), (20
 
 def process_file(filename, wordlist):
     text = []
+    total_content = 0
     lemmas_in_story = []    # all lemmas in .vert file
     content_words = []
     lemma_string = []   # string to only count unique lemmas

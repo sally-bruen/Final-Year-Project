@@ -4,10 +4,11 @@ from collections import defaultdict
 import pandas as pd
 
 type_ranges = [(101, '100C'), (301, '300C'), (501, '500C'), (1001, '1000C'), (2001, '2000C'), (3001, '3000C'),
-                               (4001, '4000C'), (5001, '5000C'), (10001, '10KC')]
+               (4001, '4000C'), (5001, '5000C'), (10001, '10KC')]
 
 def process_file(filename, wordlist):
     text = []
+    total_content = 0
     content_words = []
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter='\t')
@@ -39,14 +40,14 @@ def process_file(filename, wordlist):
                 word_counts['CONTENT_WORDS'] += 1
             else:
                 word_counts['10KplusC'] += 1
-                word_counts['CONTENT_WORDS'] += 1  # Calculate the total number of types
+                word_counts['CONTENT_WORDS'] += 1 # Calculate the total number of types
             total_content = word_counts['CONTENT_WORDS']
 
     # Calculate percentages for each frequency band
     for band in ['100C', '300C', '500C', '1000C', '2000C', '3000C', '4000C', '5000C',
                  '10KC','10KplusC']:
         if total_content > 0:
-            word_counts[band] = (word_counts[band] / total_content) * 100  # Avoid division by zero
+            word_counts[band] = (word_counts[band] / total_content) * 100 # Avoid division by zero
 
     return word_counts
 
@@ -62,20 +63,27 @@ def process_files_in_folder(folder, wordlist):
     return results
 
 def main():
-    folder = '/Users/sallybruen/PycharmProjects/TextPrograms/SeideanSi2.vert'  # path to folder of vert files
-    wordlist_file = '/Users/sallybruen/PycharmProjects/TextPrograms/wordlist_NCIv2_2022-10000.xlsx' # path to word list file in .xlsx format
+    print('Give the paths to the following files and folders.\n')
+
+    print("The input folder:")
+    folder = input()
+    print("The word list file (in .xlsx format):")
+    wordlist_file = input()
+    print("The output file (in .xlsx format):")
+    excel_file_path = input()
 
     df = pd.read_excel(wordlist_file)   # Read the wordlist file
     wordlist = df.iloc[:, 1].tolist()   # make a list of words in the wordlist at index 1
 
     results = process_files_in_folder(folder, wordlist)
 
-    excel_file_path = '/Users/sallybruen/PycharmProjects/ContentFrequency.xlsx' # path to output file
-
     fieldnames = ['FILENAME', 'CONTENT_WORDS', '100C', '300C', '500C', '1000C', '2000C', '3000C', '4000C', '5000C',
-                  '10KC','10KplusC']
+                 '10KC','10KplusC']
     df_results = pd.DataFrame(results, columns=fieldnames)
     df_results.to_excel(excel_file_path, index=False)
+
+    print('\nThe results have been outputted to ' + excel_file_path + '.\n')
+
 
 if __name__ == "__main__":
     main()
