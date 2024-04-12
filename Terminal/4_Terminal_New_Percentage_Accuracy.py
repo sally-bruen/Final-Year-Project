@@ -13,6 +13,14 @@ def assign_value(value, ranges):
             return i + 1
     return 0
 
+def round_special_values(x):
+    if x == 4.5:
+        return 5
+    elif x == 2.5:
+        return 3
+    else:
+        return round(x)
+
 def main():
     print('\nGive the path for the following files (in .xlsx format): \n')
     print("The CTTR/WDSEN file from program 2.")
@@ -41,7 +49,8 @@ def main():
 
     # Calculate the average
     df['GradeValue'] = ((df['CTTRValue'] + df['WDSENValue'] + df['TypeFreqValue'] + df['LemValue'])/4)
-    df['RoundGradeValue'] = df['GradeValue'].apply(lambda x: 3 if x == 2.5 else round(x))
+
+    df['RoundGradeValue'] = df['GradeValue'].apply(round_special_values)
 
     # Define the function to compare grades and output the result
     def compare_and_output(df):
